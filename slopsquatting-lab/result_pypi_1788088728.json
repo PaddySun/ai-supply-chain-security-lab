@@ -1,0 +1,16 @@
+{
+  "model": "deepseek-chat",
+  "ecosystem": "pypi",
+  "n_tasks": 10,
+  "repeats": 2,
+  "n_samples": 20,
+  "n_unique_packages": 6,
+  "n_hallucinated": 1,
+  "samples_with_hallucination_pct": 5.0,
+  "hallucinated_packages": [
+    "getpass"
+  ],
+  "repetition_counts": {
+    "getpass": 1
+  }
+}

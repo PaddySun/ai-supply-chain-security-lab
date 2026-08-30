@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh demo_payload.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
