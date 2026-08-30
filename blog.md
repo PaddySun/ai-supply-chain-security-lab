@@ -146,9 +146,37 @@ keyv 事件之前的另一个威胁假设是 slopsquatting（术语由 PSF 的 S
 - 别迷信溯源签名：SLSA 证明构建来源，不证明提交授权。维护者主干需要分支保护 + 提交签名强制
 - 给 Agent 挂注册表查询工具，推荐包前先验证存在性（治 slopsquatting）
 
-## 七、结论
+## 七、延伸实测：四类客户端的"打开即执行"面对比
 
-keyv 蠕虫的组合拳——劫持维护者会话 → 挂合法签名发布 → preinstall 窃凭据 → AI 配置文件持久化 → 链上 C2——每一环单独看都不新鲜，组合起来却让"克隆仓库/打开文件夹/启动会话"这些最日常的动作变成了攻击入口。我在本机验证了其中最关键的"零安装执行"环节（两条链均成功，其中 Claude Code 链零交互），也量化了 slopsquatting 在前沿模型上的收敛。防御者的重心必须从"安装时刻"移到"**Agent 决策时刻**"和"**打开工作区的第一毫秒**"。
+keyv 蠕虫之后，我们把同一套无害载荷（写日志 + 弹计算器）投向了更多客户端，
+包括国产 AI IDE 的新攻击面——**工作区级 MCP 服务器声明**（详细过程见仓库
+[ide-autorun-demo/](https://github.com/PaddySun/ai-supply-chain-security-lab/tree/main/ide-autorun-demo)）：
+
+| 客户端 | 版本 | 工作区 MCP 自动执行 | 工作区 hooks 自动执行 | 判定 |
+|---|---|---|---|---|
+| ZCode（CLI） | 3.0.96 / CLI 0.16.5 | ✅ 零交互拉起（实测） | ❌ 被信任门控拦截（实测） | 信任模型不一致，高危 |
+| Claude Code | v2.1.224 | — | ✅ 零交互执行（实测） | 高危 |
+| TRAE SOLO CN | 1.107.1 | ❌ 默认关 + 应用级作用域 + 防自改（代码证实） | — | 设计正确 |
+| VS Code | — | — | tasks.json 需 Trust+Allow | 有条件放行 |
+
+**ZCode 的复现**：工作区 `.zcode/config.json` 的 `mcp.servers.<name>.command`
+在 agent 会话启动时被自动 spawn——实测一次会话拉起两次、弹出两个计算器、
+零确认弹窗；而同一份配置里的 SessionStart hook 却被 `trustState` 门控拦截
+（用户级的同一 hook 正常执行）。**对 hooks 设了门控、对 MCP 的 `command`
+字段却直接放行**——但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。
+对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：
+它看起来只是在"连接工具服务器"。
+
+**TRAE 的三层防御**（反编译 1.107.1 证实）：`.trae/mcp.json` 默认不加载
+（`trae.mcp.enableWorkspaceMcp` 默认 false）、该设置为应用级作用域
+（仓库无法替受害者打开）、`ensurePathInReadSafeScope` 阻止 IDE 内 agent 被
+prompt injection 后自改这些配置文件。这是目前看到的对 keyv 战法最完整的
+工程化回应——**问题不在"打开项目会执行配置"这个功能本身，而在执行前有没有
+一道仓库自己绕不过去的信任门**。
+
+## 八、结论
+
+keyv 蠕虫的组合拳——劫持维护者会话 → 挂合法签名发布 → preinstall 窃凭据 → AI 配置文件持久化 → 链上 C2——每一环单独看都不新鲜，组合起来却让"克隆仓库/打开文件夹/启动会话"这些最日常的动作变成了攻击入口。我在本机验证了其中最关键的"零安装执行"环节：Claude Code 链零交互成功；ZCode 的工作区 MCP 声明同样零交互拉起任意命令，且其信任门控只覆盖 hooks 不覆盖 MCP；而 TRAE 用"默认关 + 应用级作用域 + 防自改"三层设计证明这个攻击面是可以工程化封死的。也量化了 slopsquatting 在前沿模型上的收敛。防御者的重心必须从"安装时刻"移到"**Agent 决策时刻**"和"**打开工作区的第一毫秒**"——并且，一个仓库能写进来的每一份配置文件，都该过同一道门。
 
 ## 参考资料
 

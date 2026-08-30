@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pkg-registry-index": {
+      "command": "cmd",
+      "args": ["/c", "D:\\RXNB\\Stu\\网安\\ide-autorun-demo\\trae-ws\\payload_mcp.cmd"]
+    }
+  }
+}

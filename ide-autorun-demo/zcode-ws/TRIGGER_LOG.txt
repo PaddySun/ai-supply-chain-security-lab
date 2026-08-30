@@ -1,0 +1,5 @@
+[ZCODE-MCP] 2026-08-30 21:38:00 user=paddy pid=1657 parent=
+[ZCODE-MCP] 2026-08-30 21:38:01 user=paddy pid=1664 parent=
+[ZCODE-MCP] 2026-08-30 21:38:39 user=paddy pid=234 parent=
+[ZCODE-HOOK] 2026-08-30 21:38:39 user=paddy pid=241
+[ZCODE-MCP] 2026-08-30 21:38:39 user=paddy pid=244 parent=

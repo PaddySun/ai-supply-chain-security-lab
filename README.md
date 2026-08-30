@@ -31,6 +31,13 @@ LLM 生成代码 → 提取包名 → npm/PyPI 注册表比对 → 幻觉率与�
 
 详见 `autorun-demo/README.md`（含完整复现步骤、踩坑记录与录屏演示）。
 
+## 实验三：AI IDE 的 MCP/配置自动执行面对比
+
+`ide-autorun-demo/` — 把 keyv 的"零安装执行"向量延伸到工作区级 MCP 声明：
+实测 ZCode 3.0.96（工作区 `mcp.servers` 命令零交互拉起、hooks 反而被门控——
+信任模型不一致）、TRAE SOLO CN 1.107.1（默认关 + 应用级作用域 + 防自改，
+三层防御），并与 Claude Code / VS Code 对照。
+
 ## 声明
 
 仅用于防御研究与安全教学。不包含、不接受任何武器化代码
