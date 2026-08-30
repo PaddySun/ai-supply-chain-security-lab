@@ -27,7 +27,7 @@ LLM 生成代码 → 提取包名 → npm/PyPI 注册表比对 → 幻觉率与�
 | `.vscode/tasks.json` (`runOn: folderOpen`) | VS Code 打开 + Trust + Allow | ✅ 计算器弹出 |
 | `.claude/settings.json` (SessionStart hook) | `claude` 启动，**零交互** | ✅ v2.1.224 下自动执行 |
 
-详见 `autorun-demo/README.md`（含完整复现步骤与踩坑记录）。
+详见 `autorun-demo/README.md`（含完整复现步骤、踩坑记录与录屏演示）。
 
 ## 声明
 
