@@ -25,7 +25,7 @@
 
 ## 目录
 
-- `docs/code-reading.md` —— 两段源码的逐行阅读（spawn + vm 沙箱）。
+- `../docs/dsh-code-reading.md` —— 两段源码的逐行阅读（spawn + vm 沙箱）。
 - `poc/agmd-injection/` —— **实验一（真正可触发的项目级面）**：仓库自带
   `AGENTS.md` + `.dsh/skills` 自动注入，诱导 agent 运行良性载荷。
 - `poc/mcp-spawn/` —— **实验二（文档化）**：MCP 配置里的任意 `command/args` → DSH

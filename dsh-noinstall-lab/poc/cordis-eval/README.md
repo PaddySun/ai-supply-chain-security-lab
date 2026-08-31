@@ -1,6 +1,6 @@
 # 实验三：cordis_run 的进程内 vm 求值（工具级，gated）
 
-## 机制（源码见 `../docs/code-reading.md` 第二节）
+## 机制（源码见 `../../docs/dsh-code-reading.md` 第二节）
 
 `dsh-tool-cordis` 暴露五个**模型可见工具**：`cordis_inspect` / `cordis_define` /
 `cordis_run` / `cordis_stop` / `cordis_undefine`。其中：
