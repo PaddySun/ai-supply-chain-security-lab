@@ -4,7 +4,7 @@
 > 窃密/持久化/C2/武器化代码。目标运行时是 **DeepSeek Harness (DSH)**
 > `@deepseek-ai/dsh@0.1.1-rc.2`。
 
-本实验回答一个问题：keyv 蠕虫（2026-08-04，435 个 npm 包）那套"**不执行
+本实验回答一个问题：keyv 蠕虫（2026-08-04，444 个 npm 包）那套"**不执行
 `npm install`，只打开项目/启动 AI 会话，代码就运行了**"的打法，能否迁移到 DSH？
 
 **一句话结论**：DSH **没有** `.vscode/tasks.json`（folderOpen 任务）或
@@ -57,7 +57,10 @@ python -m venv .venv
 
 ### 实验二 / 三（profile/工具级，仅文档 + 示例，不实际注入）
 
-见各自目录的 README。它们需要修改 `~/.dsh/cordis.patch.yml` 或调用被 gated 的
+见各自目录的 README。它们需要修改 profile 的 `cordis.patch.yml`（生效路径
+`$DSH_HOME/profiles/<profile>/cordis.patch.yml`，或 `dsh --patch <yml>` 免落盘；
+注意 `~/.dsh/` 根下的同名文件会被静默忽略——勘误见
+`../../docs/pr-1-verification.md` §3.2/§3.3）或调用被 gated 的
 `cordis_*` 工具，属于"获得 profile 写入权/危险工具授权后"的后续利用，故只做
 示例与源码佐证，不落地运行。
 

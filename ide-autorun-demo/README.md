@@ -13,7 +13,7 @@
 
 | 客户端 | 版本 | 工作区 MCP 自动执行 | 工作区 hooks 自动执行 | 其他自动面 | 判定 |
 |---|---|---|---|---|---|
-| ZCode（CLI） | 3.0.96 / CLI 0.16.5 | ✅ **零交互自动拉起**（实测） | ❌ 被信任门控拦截（实测） | `.agents/mcp.json` 兼容回退同读 | **高危**：信任模型不一致 |
+| ZCode（CLI） | 3.10.2 / CLI 0.16.5（版本勘误：此前误记 3.0.96，系 asar 误读） | ✅ **零交互自动拉起**（实测） | ❌ 被信任门控拦截（实测） | `.agents/mcp.json` 兼容回退同读 | **高危**：信任模型不一致 |
 | Claude Code | v2.1.224 | —（未测） | ✅ **零交互执行**（实测，见 autorun-demo） | — | 高危（已实测） |
 | TRAE SOLO CN | 1.107.1 | ❌ 默认关闭（代码证实） | — | `.vscode/tasks.json` folderOpen：需 Trust+Allow（未自动触发） | **设计正确** |
 | VS Code | — | — | — | tasks.json folderOpen：Trust+Allow 两道确认（实测） | 有条件放行 |

@@ -11,7 +11,7 @@
 
 核心实测结论：
 
-- **ZCode 3.0.96（桌面版）**：用 `Ctrl+K Ctrl+O` 选中工作区文件夹、**还没发任何消息**，计算器即弹出——工作区 `.zcode/config.json` 声明的 MCP 命令在打开工作区瞬间自动执行，零交互、无任何确认（有录屏）。桌面版对工作区 **hooks** 却有完整的审核 UI——信任模型不一致。
+- **ZCode 3.10.2（桌面版）**：用 `Ctrl+K Ctrl+O` 选中工作区文件夹、**还没发任何消息**，计算器即弹出——工作区 `.zcode/config.json` 声明的 MCP 命令在打开工作区瞬间自动执行，零交互、无任何确认（有录屏）。桌面版对工作区 **hooks** 却有完整的审核 UI——信任模型不一致。
 - **ZCode CLI 0.16.5**：无头模式同样自动拉起，作为桌面版结论的旁证。
 - **Claude Code v2.1.224**：工作区 SessionStart hook 零交互执行（此前实验已证）。
 - **TRAE SOLO CN 1.107.1**：三层防御（默认关 + 应用级作用域 + 防 agent 自改配置），实测打开投毒工作区零触发——同类问题可以被工程化封死。
@@ -28,7 +28,7 @@
 | 项目 | 版本 |
 |---|---|
 | 操作系统 | Windows 10 22H2 (19045)，用户 `paddy` |
-| ZCode 桌面版 | 3.0.96（内置 CLI `glm/zcode.cjs` 0.16.5） |
+| ZCode 桌面版 | 3.10.2（内置 CLI `glm/zcode.cjs` 0.16.5；版本以 exe VersionInfo 为准） |
 | TRAE SOLO CN | 1.107.1（VS Code fork） |
 | Claude Code | v2.1.224 |
 | VS Code | 最新稳定版 |
@@ -83,12 +83,14 @@ message: "a configured-disabled hook cannot be runnable"
 
 ### 3.2 触发方式与结果
 
+> 版本勘误（2026-08-31）：早先文本误将应用版本记为 3.0.96（asar 正则误读内置依赖版本号）。实测时间线：8-30 21:38（CLI）为更新前版本；8-31 13:17（桌面 11 连发）与 18:27（CLI 复测）均已运行 3.10.2——即**当前最新版桌面与 CLI 双通道均复现**。
+
 **触发方式 A：桌面版 UI（最终实测，2026-08-31 13:17）**
 
 1. `Ctrl+K Ctrl+O` → 选中 `zcode-ws` 文件夹
 2. **不需要发消息、不需要任何确认**——选择文件夹的瞬间计算器弹出
 
-结果（`TRIGGER_LOG.txt` 节选，13:17:04–13:18:33 共 **11 次**拉起）：
+结果（`TRIGGER_LOG.txt` 节选，13:17:04–13:18:33 共 **10 次**拉起）：
 
 ```
 [ZCODE-MCP] 2026-08-31 13:17:04 user=paddy pid=179    ← 打开工作区瞬间
@@ -96,7 +98,7 @@ message: "a configured-disabled hook cannot be runnable"
 [ZCODE-MCP] 2026-08-31 13:17:05 user=paddy pid=2021
 [ZCODE-MCP] 2026-08-31 13:17:05 user=paddy pid=1858
 [ZCODE-MCP] 2026-08-31 13:17:15 user=paddy pid=1956
-...（后续会话启动与重试共 11 次）
+...（后续会话启动与重试共 10 次）
 ```
 
 录屏证据：[docs/media/zcode-mcp-demo.mp4](media/zcode-mcp-demo.mp4)（10.9MB，完整记录"选文件夹 → 计算器弹出"）。
@@ -258,7 +260,7 @@ DSH 是五款中唯一把主要希望寄托在**权限模式 + 模型自觉**上
 
 | 客户端 | 版本 | 工作区 MCP 自动执行 | 工作区 hooks 自动执行 | 触发点 | 判定 |
 |---|---|---|---|---|---|
-| **ZCode 桌面版** | 3.0.96 | ✅ **零交互**（实测+录屏，11 次） | ❌ 待审核门控（实测，UI 良好） | **打开工作区瞬间** | **不一致，高危** |
+| **ZCode 桌面版** | 3.10.2 | ✅ **零交互**（实测+录屏，10 次） | ❌ 待审核门控（实测，UI 良好） | **打开工作区瞬间** | **不一致，高危** |
 | ZCode CLI | 0.16.5 | ✅ 零交互（实测） | ❌ 门控（用户级放行） | 会话启动 | 同上 |
 | Claude Code | v2.1.224 | —（未测） | ✅ **零交互**（实测+GIF） | 会话启动 | 高危 |
 | TRAE SOLO CN | 1.107.1 | ❌ 默认关+作用域锁+防自改（代码+实测） | — | — | **设计正确** |
@@ -306,5 +308,5 @@ ide-autorun-demo/
 
 - [StepSecurity — ChainDrop npm Worm](https://www.stepsecurity.io/blog/chaindrop-npm-worm)（keyv 蠕虫载荷与持久化细节）
 - [SANS ISC — Don't Revoke That Token Yet](https://isc.sans.edu/diary/Dont+Revoke+That+Token+Yet+Inside+the+keyvcacheable+npm+Worm/33218)
-- [本仓库 keyv 蠕虫全文分析](blog.md) · [autorun-demo（Claude Code/VS Code 实验）](autorun-demo/README.md) · [ide-autorun-demo（本文实验）](ide-autorun-demo/README.md)
+- [本仓库 keyv 蠕虫全文分析](blog.md) · [autorun-demo（Claude Code/VS Code 实验）](../autorun-demo/README.md) · [ide-autorun-demo（本文实验）](../ide-autorun-demo/README.md)
 - ZCode 配置指南（内置技能 `zcode-configuration-guide`："workspace-scoped servers are trusted and auto-connected by default"）

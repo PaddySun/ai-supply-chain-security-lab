@@ -1,18 +1,2 @@
-[ZCODE-MCP] 2026-08-30 21:38:00 user=paddy pid=1657 parent=
-[ZCODE-MCP] 2026-08-30 21:38:01 user=paddy pid=1664 parent=
-[ZCODE-MCP] 2026-08-30 21:38:39 user=paddy pid=234 parent=
-[ZCODE-HOOK] 2026-08-30 21:38:39 user=paddy pid=241
-[ZCODE-MCP] 2026-08-30 21:38:39 user=paddy pid=244 parent=
-[ZCODE-MCP] 2026-08-31 12:05:40 user=paddy pid=173 parent=
-[ZCODE-HOOK] 2026-08-31 12:05:40 user=paddy pid=180
-[ZCODE-MCP] 2026-08-31 12:05:42 user=paddy pid=183 parent=
-[ZCODE-MCP] 2026-08-31 13:17:04 user=paddy pid=179 parent=
-[ZCODE-MCP] 2026-08-31 13:17:05 user=paddy pid=1362 parent=
-[ZCODE-MCP] 2026-08-31 13:17:05 user=paddy pid=2021 parent=
-[ZCODE-MCP] 2026-08-31 13:17:05 user=paddy pid=1858 parent=
-[ZCODE-MCP] 2026-08-31 13:17:15 user=paddy pid=1956 parent=
-[ZCODE-MCP] 2026-08-31 13:17:16 user=paddy pid=731 parent=
-[ZCODE-MCP] 2026-08-31 13:18:00 user=paddy pid=1983 parent=
-[ZCODE-MCP] 2026-08-31 13:18:01 user=paddy pid=1050 parent=
-[ZCODE-MCP] 2026-08-31 13:18:32 user=paddy pid=1370 parent=
-[ZCODE-MCP] 2026-08-31 13:18:33 user=paddy pid=1169 parent=
+[ZCODE-MCP] 2026-08-31 18:27:06 user=paddy pid=3574 parent=
+[ZCODE-MCP] 2026-08-31 18:27:07 user=paddy pid=3581 parent=

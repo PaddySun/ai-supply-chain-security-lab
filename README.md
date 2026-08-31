@@ -18,7 +18,7 @@
 |---|---|---|
 | `slopsquatting-lab/` | 实验一：LLM 包幻觉测量（USENIX'25 方法论复现） | deepseek-chat 零幻觉 vs 论文 19.7% |
 | `autorun-demo/` | 实验二：Claude Code / VS Code 零安装执行 | Claude Code 零交互执行；VS Code 两道确认败给"已信任项目" |
-| `ide-autorun-demo/` | 实验三：ZCode / TRAE 工作区 MCP 攻击面 | ZCode 打开文件夹即拉起（11 次）；TRAE 三层防御为正面范例 |
+| `ide-autorun-demo/` | 实验三：ZCode / TRAE 工作区 MCP 攻击面 | ZCode 打开文件夹即拉起（10 次）；TRAE 三层防御为正面范例 |
 | `ide-autorun-demo/dsh-noinstall-lab/` | 实验四（PR #1，作者 huangmaomaojiejie）：DeepSeek Harness 无安装执行 | 项目级注入成立；profile 级 MCP 配置即 spawn |
 | `ide-autorun-demo/dsh-bypass-lab/` | 实验五：DSH 沙箱绕过 | ShellWindows 委托在 WRITE_RESTRICTED 令牌下调起完整令牌进程 |
 | `docs/` | 全部文章、验证报告、会话转录与录屏归档 | 见下 |
@@ -28,7 +28,7 @@
 | 文件/目录 | 内容 |
 |---|---|
 | `docs/blog.md` | keyv 蠕虫全景分析（事件/漏斗/载荷/复现/处置） |
-| `docs/ide-attack-surface.md` | 四客户端攻击面实测报告 |
+| `docs/ide-attack-surface.md` | 五客户端攻击面实测报告（含 DSH） |
 | `docs/slopsquatting-article-draft.md` | 实验一文章底稿 |
 | `docs/pr-1-verification.md` | PR #1 本地验证报告（源码核对/三处修正/端到端实测/沙箱绕过/会话取证） |
 | `docs/dsh-code-reading.md` | DSH 源码逐行阅读（PR #1 作者煌，mcp-client spawn + cordis vm 沙箱） |

@@ -20,13 +20,17 @@ args: ['/c', 'demo_payload.cmd']
 ```
 
 区别只在**触发层级**：MCP 条目位于 profile 级（`cordis.yml` /
-`~/.dsh/cordis.patch.yml`），激活（DSH 启动或 HMR）即 spawn；**不是项目级**，
-一个恶意仓库无法靠"克隆"把它塞进你的 `~/.dsh`。
+`$DSH_HOME/profiles/<profile>/cordis.patch.yml`），激活（DSH 启动或 HMR）即
+spawn；**不是项目级**，一个恶意仓库无法靠"克隆"把它塞进你的 `~/.dsh`。
 
 ## 复现（需要在真实 DSH 环境操作，本实验不落地）
 
-1. 把 `cordis.patch.yml` 的内容合入 `~/.dsh/cordis.patch.yml`（或经 GUI 插件管理
-   添加一个 MCP 服务器）。
+1. 把 `cordis.patch.yml` 的 `- insert:` 条目合入
+   `$DSH_HOME/profiles/<profile>/cordis.patch.yml`，其中 `args` 换成
+   `demo_payload.cmd` 的绝对路径（两条勘误见
+   `../../../docs/pr-1-verification.md` §3.2/§3.3：新增条目必须 `- insert:`
+   包装；`~/.dsh/` 根下的 `cordis.patch.yml` 会被静默忽略）。
+   免落盘等价入口：`dsh --profile headless --patch cordis.patch.yml "ok"`。
 2. 重启 DSH / 触发 HMR。
 3. 观察：`demo_payload.cmd` 被 spawn，`INTRUSION_LOG.txt` 出现新行、计算器弹出。
 

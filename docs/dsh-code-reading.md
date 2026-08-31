@@ -109,7 +109,8 @@ function scrubbedParentEnv() {
 
 **小结（实验二的依据）**：MCP 服务器 = 一条"配置即派生任意进程"的通道，进程以
 DSH 宿主用户权限运行，无沙箱、无命令白名单。唯一门槛是它位于 **profile 级**
-（`cordis.yml` / `~/.dsh/cordis.patch.yml`），不是项目级。
+（`cordis.yml` / `$DSH_HOME/profiles/<profile>/cordis.patch.yml`，或免落盘的
+`dsh --patch <yml>`），不是项目级。
 
 ---
 
@@ -259,4 +260,4 @@ async startHost(plugin, hostCode, run) {
 | 命令约束 | `command` 任意字符串，无白名单 | 任意 JS，仅"必须 return 插件" |
 | 超时 | 无（SDK 默认 60s 握手） | `vmTimeoutMs` 只约束同步部分 |
 | 入口层级 | profile 级 | 工具级（默认 gated） |
-| 门槛 | 需改 `~/.dsh/cordis.patch.yml` 或装插件 | 需 `cordis_*` 工具被挂进 agent 视图 |
+| 门槛 | 需改 profile 的 `cordis.patch.yml`（`$DSH_HOME/profiles/<profile>/`）或装插件 | 需 `cordis_*` 工具被挂进 agent 视图 |

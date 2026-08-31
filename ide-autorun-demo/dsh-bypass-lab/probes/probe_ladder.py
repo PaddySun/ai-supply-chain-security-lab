@@ -10,7 +10,8 @@ r"""[BENIGN RESEARCH PROBE] 阶梯测试 DSH pwsh 沙箱（WRITE_RESTRICTED ACL 
 T1 start calc:       —— 协议激活（注意：calc: 在多数机器非注册协议，会弹"选择应用"）
 T2 explorer calc.exe —— 直接委托已运行桌面 shell
 T3 notepad           —— 非 UWP GUI 对照组（验证"进程派生不受限"）
-T4 schtasks          —— 经任务计划服务派生（预期被沙箱拦截）
+T4 schtasks          —— 经任务计划服务派生（预期被沙箱拦截；探针末尾会尝试
+                       schtasks /delete 清理 csvq-init-demo，避免无沙箱直跑时残留）
 每步结果写 TRIGGER_LOG.txt。
 """
 import datetime
@@ -49,6 +50,8 @@ def main():
          "/sc", "once", "/st", t, "/f"]))
     try_tag("T4-schtasks-run", lambda: subprocess.call(
         ["schtasks", "/run", "/tn", "csvq-init-demo"]))
+    try_tag("T4-schtasks-cleanup", lambda: subprocess.call(
+        ["schtasks", "/delete", "/tn", "csvq-init-demo", "/f"]))
     log("LADDER", "done")
 
 

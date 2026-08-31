@@ -160,7 +160,7 @@ keyv 蠕虫之后，我们把同一套无害载荷（写日志 + 弹计算器）
 | VS Code | — | — | tasks.json 需 Trust+Allow | 有条件放行 |
 | DSH | 0.1.1-rc.2 | ❌ profile 级（需配置写入） | —（无 hooks 面） | 项目级注入→agent 零确认执行；沙箱不限进程派生，COM 委托可绕至完整令牌 |
 
-**ZCode 的复现**：桌面版 3.0.96 用 `Ctrl+K Ctrl+O` **选中工作区文件夹、尚未发送任何消息**的瞬间，`mcp.servers` 声明的命令即被拉起（录屏为证，一次打开共 11 次执行，零确认弹窗）；无头 CLI 同样自动拉起。而同一份配置里的 SessionStart hook 被桌面版"待审核"UI 门控（用户信任后按工作区记忆）——**对 hooks 设了门控、对 MCP 的 `command` 字段却直接放行**。但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：它看起来只是在"连接工具服务器"。完整实测报告（含反编译代码讲解与录屏）见 [ide-attack-surface.md](ide-attack-surface.md)。
+**ZCode 的复现**：桌面版 3.10.2 用 `Ctrl+K Ctrl+O` **选中工作区文件夹、尚未发送任何消息**的瞬间，`mcp.servers` 声明的命令即被拉起（录屏为证，一次打开共 10 次执行，零确认弹窗）；无头 CLI 同样自动拉起。而同一份配置里的 SessionStart hook 被桌面版"待审核"UI 门控（用户信任后按工作区记忆）——**对 hooks 设了门控、对 MCP 的 `command` 字段却直接放行**。但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：它看起来只是在"连接工具服务器"。完整实测报告（含反编译代码讲解与录屏）见 [ide-attack-surface.md](ide-attack-surface.md)。
 
 **TRAE 的三层防御**（反编译 1.107.1 证实）：`.trae/mcp.json` 默认不加载
 （`trae.mcp.enableWorkspaceMcp` 默认 false）、该设置为应用级作用域

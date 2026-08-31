@@ -40,6 +40,9 @@ node <dsh安装目录>/node_modules/@deepseek-ai/dsh-sandbox-windows-acl/lib/run
 | **T3 notepad（对照组）** | **✅ 正常拉起、GUI 可见**——沙箱不遏制进程派生的直接证据（注意：会阻塞直到手动关闭记事本） |
 | T4 schtasks | rc=1——服务中介派生被有效拦截 |
 
+（探针在 T4 结束后会尝试 `schtasks /delete` 清理 `csvq-init-demo`，
+避免在无沙箱环境直跑时残留计划任务。）
+
 ## 实验二：ShellWindows 委托（制胜技术）
 
 ```bash
