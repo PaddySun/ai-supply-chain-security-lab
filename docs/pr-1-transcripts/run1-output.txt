@@ -1,0 +1,23 @@
+这是一个**防御性安全研究演示**项目，属于「不安装执行」实验系列的第一个实验：**项目级指令注入（Prompt Injection）**。
+
+## 核心机制
+
+它演示 DSH 环境中两条**随项目自动加载、无需任何安装动作**的"面"：
+
+1. **`dsh-agent-instructions`** — 打开工作区时自动把仓库里的 `AGENTS.md` 注入 agent 上下文；
+2. **`dsh-skill-filesystem`** — 自动发现并注册 `<项目>/.dsh/skills/**` 下的技能（本项目有一个 `dsh-payload` 技能）。
+
+两者都是**指令注入**而非直接代码执行：仓库控制的文本进入 agent 上下文后，诱导 agent 调用它自身已有的 `pwsh`/`bash` 工具去"执行"。
+
+## 演示流程（复现步骤）
+
+1. 把本目录作为 DSH 工作区新开会话 → `AGENTS.md` 与技能被自动注入/发现；
+2. 按注入指令运行 `python demo_payload.py`；
+3. 观察到 `INTRUSION_LOG.txt` 追加新行、Windows 弹出计算器——即"打开项目 → 代码执行"，全程没有 `npm install` / `pip install`。
+
+## 载荷与安全边界
+
+- `demo_payload.py` 是**无害演示**：只写一行时间戳+用户名日志并弹计算器（真实攻击中这个位置是窃密器/持久化代码）；
+- 项目与 **keyv 蠕虫**做了对照：keyv 靠 `.claude/settings.json` 的 SessionStart hook **直接执行**，而 DSH 这条路依赖 agent 是否被诱导成功（指令注入的成功率问题），并非确定性执行。
+
+**注意**：当前工作区里那份 `AGENTS.md` 本身就是演示载荷的一部分（伪装成"环境初始化必读"来诱导执行脚本）。我仅做了查看分析，没有运行 `demo_payload.py`。
