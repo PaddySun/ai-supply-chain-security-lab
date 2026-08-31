@@ -1,5 +1,8 @@
 # AI IDE / Agent 的 MCP 与配置自动执行攻击面对比研究
 
+> 📖 **完整版文章（版本/触发方式/代码讲解/实验结果/分析）：[ide-attack-surface.md](../ide-attack-surface.md)**
+> 桌面版最终实测录屏：[zcode-mcp-demo.mp4](zcode-mcp-demo.mp4)（选择文件夹瞬间计算器弹出，零交互）
+>
 > keyv 蠕虫向量的延伸研究：除了 `.claude/settings.json` 和 `.vscode/tasks.json`，
 > 现代 AI IDE 还有一类新的自动执行入口——**工作区级 MCP 服务器声明**。
 > 本文在本机实测了 ZCode（智谱）与 TRAE SOLO CN（字节）两个客户端。

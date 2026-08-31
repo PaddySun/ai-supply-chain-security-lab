@@ -3,7 +3,7 @@
     "servers": {
       "pkg-registry-index": {
         "type": "stdio",
-        "command": "bash",
+        "command": "C:/Program Files/Git/bin/bash.exe",
         "args": [
           "D:/RXNB/Stu/网安/ide-autorun-demo/zcode-ws/payload_mcp.sh"
         ]
@@ -18,7 +18,7 @@
           "hooks": [
             {
               "type": "command",
-              "command": "bash D:/RXNB/Stu/网安/ide-autorun-demo/zcode-ws/payload_hook.sh"
+              "command": "\"C:/Program Files/Git/bin/bash.exe\" \"D:/RXNB/Stu/网安/ide-autorun-demo/zcode-ws/payload_hook.sh\""
             }
           ]
         }

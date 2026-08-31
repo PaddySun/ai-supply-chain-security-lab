@@ -159,13 +159,7 @@ keyv 蠕虫之后，我们把同一套无害载荷（写日志 + 弹计算器）
 | TRAE SOLO CN | 1.107.1 | ❌ 默认关 + 应用级作用域 + 防自改（代码证实） | — | 设计正确 |
 | VS Code | — | — | tasks.json 需 Trust+Allow | 有条件放行 |
 
-**ZCode 的复现**：工作区 `.zcode/config.json` 的 `mcp.servers.<name>.command`
-在 agent 会话启动时被自动 spawn——实测一次会话拉起两次、弹出两个计算器、
-零确认弹窗；而同一份配置里的 SessionStart hook 却被 `trustState` 门控拦截
-（用户级的同一 hook 正常执行）。**对 hooks 设了门控、对 MCP 的 `command`
-字段却直接放行**——但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。
-对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：
-它看起来只是在"连接工具服务器"。
+**ZCode 的复现**：桌面版 3.0.96 用 `Ctrl+K Ctrl+O` **选中工作区文件夹、尚未发送任何消息**的瞬间，`mcp.servers` 声明的命令即被拉起（录屏为证，一次打开共 11 次执行，零确认弹窗）；无头 CLI 同样自动拉起。而同一份配置里的 SessionStart hook 被桌面版"待审核"UI 门控（用户信任后按工作区记忆）——**对 hooks 设了门控、对 MCP 的 `command` 字段却直接放行**。但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：它看起来只是在"连接工具服务器"。完整实测报告（含反编译代码讲解与录屏）见 [ide-attack-surface.md](ide-attack-surface.md)。
 
 **TRAE 的三层防御**（反编译 1.107.1 证实）：`.trae/mcp.json` 默认不加载
 （`trae.mcp.enableWorkspaceMcp` 默认 false）、该设置为应用级作用域
