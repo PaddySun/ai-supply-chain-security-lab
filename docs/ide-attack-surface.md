@@ -92,7 +92,7 @@ message: "a configured-disabled hook cannot be runnable"
 ...（后续会话启动与重试共 11 次）
 ```
 
-录屏证据：[ide-autorun-demo/zcode-mcp-demo.mp4](ide-autorun-demo/zcode-mcp-demo.mp4)（10.9MB，完整记录"选文件夹 → 计算器弹出"）。
+录屏证据：[docs/media/zcode-mcp-demo.mp4](media/zcode-mcp-demo.mp4)（10.9MB，完整记录"选文件夹 → 计算器弹出"）。
 
 **触发方式 B：CLI 无头模式（2026-08-30 21:38 初次实测）**
 
@@ -207,7 +207,7 @@ ide-autorun-demo/
 │   ├── payload_hook.sh        [ZCODE-HOOK] 日志
 │   └── TRIGGER_LOG.txt        全部触发证据
 ├── trae-ws/                   TRAE 演示工作区（.trae/mcp.json + .vscode/tasks.json）
-├── zcode-mcp-demo.mp4         桌面版"选文件夹即弹计算器"录屏
+├── (zcode-mcp-demo.mp4        桌面版"选文件夹即弹计算器"录屏 → 已归档 ../docs/media/)
 └── README.md                  简版步骤
 ```
 

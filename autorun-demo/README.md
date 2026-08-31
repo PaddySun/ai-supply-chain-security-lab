@@ -36,7 +36,7 @@ paddy                          ← whoami，当前用户权限
 CalculatorApp.exe  PID 17692   ← 计算器进程
 ```
 
-![Claude Code 启动即执行演示](claude-autorun-demo.gif)
+![Claude Code 启动即执行演示](../docs/media/claude-autorun-demo.gif)
 
 **踩坑记录（复现时注意）**：hook 命令若写成 `cmd /c "%CLAUDE_PROJECT_DIR%\xxx.cmd"`，
 Windows 上会报 `EPERM: uv_spawn 'C:\Program Files\Git\bin\bash.exe'` 静默失败——

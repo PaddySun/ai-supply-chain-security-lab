@@ -1,46 +1,49 @@
-# AI 编码助手供应链安全研究（Slopsquatting + 零安装执行）
+# AI 编码助手供应链安全研究实验室
 
-📖 **[完整博客文章：《打开项目即沦陷：keyv 蠕虫与 AI 编码助手时代的供应链暗战》](blog.md)** —— 事件还原、影响漏斗、版本清单、本地复现与处置措施。
+2026 年 keyv 蠕虫事件（npm 投毒 444 包 / 2212 版本）的防御性研究复现仓库。
+所有载荷均为无害演示（写日志 + 弹计算器），不含任何窃密/持久化/C2 代码。
 
-📖 **[独立实测报告：《打开文件夹即执行：ZCode / TRAE / Claude Code / VS Code 工作区自动执行攻击面实测》](ide-attack-surface.md)** —— 四款客户端分 CLI/UI 触发路径、反编译代码讲解、实验日志与录屏、防御对比。
+📖 **[完整博客：《打开项目即沦陷：keyv 蠕虫与 AI 编码助手时代的供应链暗战》](docs/blog.md)**
+📖 **[独立实测报告：《打开文件夹即执行：四款客户端工作区自动执行攻击面》](docs/ide-attack-surface.md)**
+🧪 **[一站式复现指南（五个实验，任何人可复现）](docs/reproduction-guide.md)**
 
-2026 年 keyv 蠕虫事件（435 个 npm 包投毒）的防御性研究复现，包含两个独立实验。
+> ⚠️ **警告**：`autorun-demo/`、`ide-autorun-demo/`、`dsh-bypass-lab/` 内含
+> **可自动执行的无害演示载荷**——用 VS Code / Claude Code / ZCode / DSH 打开
+> 对应工作区会自动弹出计算器并写日志。请使用一次性环境体验，勿在日常开发
+> 环境打开。
 
-> ⚠️ **警告：`autorun-demo/` 包含可自动执行的无害演示载荷。**
-> 用 VS Code / Claude Code 打开该文件夹会自动弹出计算器并写入日志。
-> 载荷仅用于演示攻击向量（打开项目 = 执行代码），不含任何恶意功能。
-> 体验请使用一次性环境，勿在日常开发环境打开。
+## 仓库地图
 
-## 实验一：Slopsquatting（模型幻觉包名测量）
-
-`slopsquatting-lab/` — 复现 USENIX Security 2025《We Have a Package for You!》方法论：
-LLM 生成代码 → 提取包名 → npm/PyPI 注册表比对 → 幻觉率与复现率统计。
-
-实测（deepseek-chat，2026-08-30）：PyPI 20 样本 + npm 24 样本，**零幻觉**，
-与论文 2025 年 19.7% 平均值对照，量化了前沿模型的改进幅度。
-
-详见 `slopsquatting-lab/article_draft.md`。
-
-## 实验二：零安装执行（打开项目 = 运行代码）
-
-`autorun-demo/` — 复现 keyv 蠕虫的核心战法：不执行 `npm install`，
-仅打开项目文件夹 / 启动 AI 会话即触发代码执行。
-
-| 攻击面 | 触发条件 | 本机实测 |
+| 目录 | 内容 | 关键结论 |
 |---|---|---|
-| `.vscode/tasks.json` (`runOn: folderOpen`) | VS Code 打开 + Trust + Allow | ✅ 计算器弹出 |
-| `.claude/settings.json` (SessionStart hook) | `claude` 启动，**零交互** | ✅ v2.1.224 下自动执行 |
+| `slopsquatting-lab/` | 实验一：LLM 包幻觉测量（USENIX'25 方法论复现） | deepseek-chat 零幻觉 vs 论文 19.7% |
+| `autorun-demo/` | 实验二：Claude Code / VS Code 零安装执行 | Claude Code 零交互执行；VS Code 两道确认败给"已信任项目" |
+| `ide-autorun-demo/` | 实验三：ZCode / TRAE 工作区 MCP 攻击面 | ZCode 打开文件夹即拉起（11 次）；TRAE 三层防御为正面范例 |
+| `dsh-noinstall-lab/` | 实验四（PR #1，作者 huangmaomaojiejie）：DeepSeek Harness 无安装执行 | 项目级注入成立；profile 级 MCP 配置即 spawn |
+| `dsh-bypass-lab/` | 实验五：DSH 沙箱绕过 | ShellWindows 委托在 WRITE_RESTRICTED 令牌下调起完整令牌进程 |
+| `docs/` | 全部文章、验证报告、会话转录与录屏归档 | 见下 |
 
-详见 `autorun-demo/README.md`（含完整复现步骤、踩坑记录与录屏演示）。
+## docs/ 结构
 
-## 实验三：AI IDE 的 MCP/配置自动执行面对比
+| 文件/目录 | 内容 |
+|---|---|
+| `docs/blog.md` | keyv 蠕虫全景分析（事件/漏斗/载荷/复现/处置） |
+| `docs/ide-attack-surface.md` | 四客户端攻击面实测报告 |
+| `docs/slopsquatting-article-draft.md` | 实验一文章底稿 |
+| `docs/pr-1-verification.md` | PR #1 本地验证报告（源码核对/三处修正/端到端实测/沙箱绕过/会话取证） |
+| `docs/dsh-code-reading.md` | DSH 源码逐行阅读（PR #1 作者煌，mcp-client spawn + cordis vm 沙箱） |
+| `docs/reproduction-guide.md` | **一站式复现指南** |
+| `docs/pr-1-transcripts/` | 实验一注入拒绝的完整终端转录 |
+| `docs/media/` | 全部录屏/ GIF / 会话日志 zip 归档 |
 
-`ide-autorun-demo/` — 把 keyv 的"零安装执行"向量延伸到工作区级 MCP 声明：
-实测 ZCode 3.0.96（工作区 `mcp.servers` 命令零交互拉起、hooks 反而被门控——
-信任模型不一致）、TRAE SOLO CN 1.107.1（默认关 + 应用级作用域 + 防自改，
-三层防御），并与 Claude Code / VS Code 对照。
+## 一句话总结
+
+**问题不在"打开项目会执行配置"这个功能本身，而在执行前有没有一道仓库自己
+绕不过去的信任门。** TRAE 证明了可以工程化封死；ZCode/Claude Code/DSH 各自
+在hooks 门控、MCP 声明、沙箱写边界上留了不同形状的门。
 
 ## 声明
 
 仅用于防御研究与安全教学。不包含、不接受任何武器化代码
 （真实持久化、窃密、C2 通信等）。复现均在本地隔离环境完成。
+欢迎通过 Issue/PR 交流；引用请注明仓库地址。

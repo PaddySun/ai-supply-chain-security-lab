@@ -99,7 +99,7 @@ CalculatorApp.exe  PID 17692   ← 计算器进程
 
 **没有任何确认弹窗。** 踩坑记录：hook 经 Git Bash 执行，命令写成 `cmd /c "%CLAUDE_PROJECT_DIR%\xxx.cmd"` 会报 `EPERM: uv_spawn bash.exe` 静默失败——载荷必须是合法 bash 语句。攻击者同样受此约束，但 bash 载荷完全可行。诚实注脚：测试机全局配置了 `skipDangerousModePermissionPrompt: true`，可能贡献了零弹窗；默认配置下的确认行为建议读者自行验证并对比。
 
-![Claude Code 启动即执行演示](autorun-demo/claude-autorun-demo.gif)
+![Claude Code 启动即执行演示](media/claude-autorun-demo.gif)
 
 ### 攻击面 B：VS Code — 打开文件夹即执行（两道摩擦）
 

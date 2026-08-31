@@ -154,7 +154,7 @@ CalculatorApp.exe  PID 34532                             ← 计算器弹出
 附注：read-only 会话中 agent 的透明度更好（主动声明"脚本会弹计算器"）；
 caveat 同前——载荷源码自我标注 benign 可能提高了透明度，真实载荷未必。
 
-### 第三模式补全：preset danger-full-access（录屏：dsh-victim-journey-modes.mp4）
+### 第三模式补全：preset danger-full-access（录屏：[media/dsh-victim-journey-modes.mp4](media/dsh-victim-journey-modes.mp4)；三份会话日志原件归档于 media/dsh-session-*.zip）
 
 | 模式 | 确认次数 | 日志执行 | 计算器弹出 |
 |---|---|---|---|

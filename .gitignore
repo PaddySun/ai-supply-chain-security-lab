@@ -3,14 +3,22 @@
 __pycache__/
 *.pyc
 
-# 实验运行时产物
+# Node（绝不入库任何源码包/依赖树）
+node_modules/
+
+# 实验运行时产物（保留各 lab 已提交的 INTRUSION_LOG 证据，忽略新产生的）
 slopsquatting-lab/registry_cache.json
 autorun-demo/hook_test.txt
+dsh-bypass-lab/probes/TRIGGER_LOG.txt
+dsh-bypass-lab/victim-project/csvq/.csvqrc
+
+# DSH 会话导出原件（根目录意外出现时忽略；归档版在 docs/media/ 内已显式跟踪）
+/dsh-session-*.zip
+
+# 本地验证工作目录（含 DSH 源码、解压包，严禁入库）
+dsh-verify/
+pr1.diff
 
 # 系统杂项
 Thumbs.db
 .DS_Store
-
-# DSH 验证工作目录（本地临时，不入库）
-dsh-verify/
-pr1.diff
