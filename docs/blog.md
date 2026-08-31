@@ -146,11 +146,11 @@ keyv 事件之前的另一个威胁假设是 slopsquatting（术语由 PSF 的 S
 - 别迷信溯源签名：SLSA 证明构建来源，不证明提交授权。维护者主干需要分支保护 + 提交签名强制
 - 给 Agent 挂注册表查询工具，推荐包前先验证存在性（治 slopsquatting）
 
-## 七、延伸实测：四类客户端的"打开即执行"面对比
+## 七、延伸实测：五类客户端的"打开即执行"面对比
 
 keyv 蠕虫之后，我们把同一套无害载荷（写日志 + 弹计算器）投向了更多客户端，
 包括国产 AI IDE 的新攻击面——**工作区级 MCP 服务器声明**（详细过程见仓库
-[ide-autorun-demo/](https://github.com/PaddySun/ai-supply-chain-security-lab/tree/main/ide-autorun-demo)）：
+[ide-autorun-demo/](https://github.com/PaddySun/ai-supply-chain-security-lab/tree/main/ide-autorun-demo)，DSH 全文见 [ide-attack-surface.md](ide-attack-surface.md) 第六节）：
 
 | 客户端 | 版本 | 工作区 MCP 自动执行 | 工作区 hooks 自动执行 | 判定 |
 |---|---|---|---|---|
@@ -158,6 +158,7 @@ keyv 蠕虫之后，我们把同一套无害载荷（写日志 + 弹计算器）
 | Claude Code | v2.1.224 | — | ✅ 零交互执行（实测） | 高危 |
 | TRAE SOLO CN | 1.107.1 | ❌ 默认关 + 应用级作用域 + 防自改（代码证实） | — | 设计正确 |
 | VS Code | — | — | tasks.json 需 Trust+Allow | 有条件放行 |
+| DSH | 0.1.1-rc.2 | ❌ profile 级（需配置写入） | —（无 hooks 面） | 项目级注入→agent 零确认执行；沙箱不限进程派生，COM 委托可绕至完整令牌 |
 
 **ZCode 的复现**：桌面版 3.0.96 用 `Ctrl+K Ctrl+O` **选中工作区文件夹、尚未发送任何消息**的瞬间，`mcp.servers` 声明的命令即被拉起（录屏为证，一次打开共 11 次执行，零确认弹窗）；无头 CLI 同样自动拉起。而同一份配置里的 SessionStart hook 被桌面版"待审核"UI 门控（用户信任后按工作区记忆）——**对 hooks 设了门控、对 MCP 的 `command` 字段却直接放行**。但声明一个 stdio MCP server 与声明"任意进程执行"是等价的。对攻击者来说这是比 keyv 的 `.claude/settings.json` 更"合法外观"的入口：它看起来只是在"连接工具服务器"。完整实测报告（含反编译代码讲解与录屏）见 [ide-attack-surface.md](ide-attack-surface.md)。
 

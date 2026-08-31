@@ -4,7 +4,7 @@
 所有载荷均为无害演示（写日志 + 弹计算器），不含任何窃密/持久化/C2 代码。
 
 📖 **[完整博客：《打开项目即沦陷：keyv 蠕虫与 AI 编码助手时代的供应链暗战》](docs/blog.md)**
-📖 **[独立实测报告：《打开文件夹即执行：四款客户端工作区自动执行攻击面》](docs/ide-attack-surface.md)**
+📖 **[独立实测报告：《打开文件夹即执行：五款客户端工作区自动执行攻击面（含 DSH）》](docs/ide-attack-surface.md)**
 🧪 **[一站式复现指南（五个实验，任何人可复现）](docs/reproduction-guide.md)**
 
 > ⚠️ **警告**：`autorun-demo/`、`ide-autorun-demo/`（含 ZCode/TRAE/DSH 全部工作区）内含
