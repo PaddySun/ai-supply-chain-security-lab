@@ -10,3 +10,7 @@ autorun-demo/hook_test.txt
 # 系统杂项
 Thumbs.db
 .DS_Store
+
+# DSH 验证工作目录（本地临时，不入库）
+dsh-verify/
+pr1.diff
