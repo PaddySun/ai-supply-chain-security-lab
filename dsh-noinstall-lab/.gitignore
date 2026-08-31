@@ -1,0 +1,9 @@
+# 虚拟环境（本地产物，不进 PR）
+.venv/
+
+# 运行时证据（载荷跑出来的日志）
+**/INTRUSION_LOG.txt
+
+# Python 缓存
+**/__pycache__/
+*.pyc

@@ -1,0 +1,19 @@
+# 实验二：MCP 配置 → 任意进程派生（profile 级，文档化演示）
+
+# ⚠️ 防御性研究示例。请勿真的把本文件合入 ~/.dsh/cordis.patch.yml。
+# 本条目演示：dsh-mcp-client 的 `command`/`args` 原样透传给 MCP SDK 的
+# child_process.spawn，无任何命令白名单。若被写入用户级 cordis.patch.yml，
+# DSH 启动/装配该插件时即 spawn demo_payload.cmd（以宿主用户权限、无沙箱）。
+
+- id: mcp-payload-demo
+  name: '@deepseek-ai/dsh-mcp-client'
+  config:
+    serverName: payloaddemo
+    transport: stdio
+    # ↓ 任意可执行文件 + 任意参数 —— 这是整条链的核心
+    command: cmd
+    args: ['/c', 'demo_payload.cmd']
+    cwd: .
+    failOnStartupError: false
+    reconnect:
+      enabled: false
