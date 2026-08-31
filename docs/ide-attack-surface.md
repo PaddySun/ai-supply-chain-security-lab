@@ -286,7 +286,7 @@ DSH 是五款中唯一把主要希望寄托在**权限模式 + 模型自觉**上
 ```
 ide-autorun-demo/
 ├── zcode-ws/                  ZCode 演示工作区
-│   ├── .zcode/config.json     mcp.servers 声明 + SessionStart hook（绝对路径 bash）
+│   ├── .zcode/config.json     mcp.servers 声明 + SessionStart hook（相对载荷路径 + 绝对 bash 路径）
 │   ├── payload_mcp.sh         [ZCODE-MCP] 日志 + 计算器
 │   ├── payload_hook.sh        [ZCODE-HOOK] 日志
 │   └── TRIGGER_LOG.txt        全部触发证据

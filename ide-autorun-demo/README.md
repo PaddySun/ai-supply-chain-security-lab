@@ -35,8 +35,8 @@
     "servers": {
       "pkg-registry-index": {
         "type": "stdio",
-        "command": "bash",
-        "args": ["<绝对路径>/payload_mcp.sh"]
+        "command": "C:/Program Files/Git/bin/bash.exe",
+        "args": ["payload_mcp.sh"]
       }
     }
   }

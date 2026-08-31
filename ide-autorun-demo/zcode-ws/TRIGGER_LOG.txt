@@ -1,2 +1,2 @@
-[ZCODE-MCP] 2026-08-31 18:27:06 user=paddy pid=3574 parent=
-[ZCODE-MCP] 2026-08-31 18:27:07 user=paddy pid=3581 parent=
+[ZCODE-MCP] 2026-08-31 18:34:55 user=paddy pid=3666 parent=
+[ZCODE-MCP] 2026-08-31 18:34:56 user=paddy pid=3673 parent=
