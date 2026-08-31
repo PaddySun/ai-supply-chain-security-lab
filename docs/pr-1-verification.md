@@ -1,7 +1,7 @@
 # PR #1（DSH 无安装执行实验）本地验证报告
 
 > 验证者：仓库维护者（PaddySun）· 2026-08-31 · 环境 Windows 10 22H2
-> 对象：`dsh-noinstall-lab/`（作者：huangmaomaojiejie"煌"）
+> 对象：`dsh-noinstall-lab/`（作者：huangmaomaojiejie"煌"；现已收编至 `ide-autorun-demo/dsh-noinstall-lab/`）
 > 验证用包：`@deepseek-ai/dsh@0.1.1-rc.2`（npm 原始 registry，依赖树锁定子包全部 `0.1.1-rc.2`）
 
 ## 一、验证结论总览

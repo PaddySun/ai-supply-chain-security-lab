@@ -9,8 +9,8 @@ node_modules/
 # 实验运行时产物（保留各 lab 已提交的 INTRUSION_LOG 证据，忽略新产生的）
 slopsquatting-lab/registry_cache.json
 autorun-demo/hook_test.txt
-dsh-bypass-lab/probes/TRIGGER_LOG.txt
-dsh-bypass-lab/victim-project/csvq/.csvqrc
+ide-autorun-demo/dsh-bypass-lab/probes/TRIGGER_LOG.txt
+ide-autorun-demo/dsh-bypass-lab/victim-project/csvq/.csvqrc
 
 # DSH 会话导出原件（根目录意外出现时忽略；归档版在 docs/media/ 内已显式跟踪）
 /dsh-session-*.zip

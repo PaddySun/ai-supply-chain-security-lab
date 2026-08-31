@@ -3,7 +3,7 @@
 > ⚠️ 全部载荷均为无害演示（写日志 + 弹计算器）。研究对象是 DeepSeek Harness (DSH)
 > `@deepseek-ai/dsh@0.1.1-rc.2` 的 pwsh 沙箱（`dsh-sandbox-windows-acl`，
 > WRITE_RESTRICTED 令牌 + 能力 SID ACL）对"拉起进程"型载荷的遏制能力。
-> 完整分析：[../docs/pr-1-verification.md](../docs/pr-1-verification.md) 第九节。
+> 完整分析：[../../docs/pr-1-verification.md](../../docs/pr-1-verification.md) 第九节。
 
 ## 环境准备
 
@@ -18,7 +18,7 @@ set DEEPSEEK_API_KEY=sk-xxx                  # bash: export DEEPSEEK_API_KEY=sk-
 ## 实验一：沙箱阶梯探针（确定性，不需要 LLM/KEY）
 
 ```bash
-cd dsh-bypass-lab
+cd ide-autorun-demo/dsh-bypass-lab
 run-under-sandbox.cmd probe_ladder <你的dsh安装目录>
 ```
 
@@ -26,12 +26,12 @@ run-under-sandbox.cmd probe_ladder <你的dsh安装目录>
 
 ```bash
 node <dsh安装目录>/node_modules/@deepseek-ai/dsh-sandbox-windows-acl/lib/runner.js \
-     --workspace <dsh-bypass-lab/probes 绝对路径> \
+     --workspace <ide-autorun-demo/dsh-bypass-lab/probes 绝对路径> \
      --temp <临时目录> --mode workspace-write \
      -- python probe_ladder.py
 ```
 
-**预期结果**（对照 [docs/pr-1-verification.md](../docs/pr-1-verification.md) 9.1 节表格）：
+**预期结果**（对照 [docs/pr-1-verification.md](../../docs/pr-1-verification.md) 9.1 节表格）：
 
 | 路径 | 预期 |
 |---|---|
@@ -68,7 +68,7 @@ $sw.Item(0).Document.Application.ShellExecute('calc.exe','','','open',1)
 
 ```bash
 # 全新洗白的 DSH_HOME（纯净环境的关键）
-cd dsh-bypass-lab/victim-project/csvq
+cd ide-autorun-demo/dsh-bypass-lab/victim-project/csvq
 set DSH_HOME=<一个全新空目录>
 set DEEPSEEK_API_KEY=sk-xxx
 node <dsh安装目录>/node_modules/@deepseek-ai/dsh/lib/bin.js \
@@ -86,7 +86,7 @@ node <dsh安装目录>/node_modules/@deepseek-ai/dsh/lib/bin.js \
 ## 文件结构
 
 ```
-dsh-bypass-lab/
+ide-autorun-demo/dsh-bypass-lab/
 ├── README.md                    本文件
 ├── run-under-sandbox.cmd        一键在沙箱 runner 下运行探针
 ├── probes/

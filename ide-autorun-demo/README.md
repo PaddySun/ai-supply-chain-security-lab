@@ -6,7 +6,7 @@
 >
 > keyv 蠕虫向量的延伸研究：除了 `.claude/settings.json` 和 `.vscode/tasks.json`，
 > 现代 AI IDE 还有一类新的自动执行入口——**工作区级 MCP 服务器声明**。
-> 本文在本机实测了 ZCode（智谱）与 TRAE SOLO CN（字节）两个客户端。
+> 本目录收录 ZCode、TRAE 与 DeepSeek Harness（DSH）三组实测工作区。
 > 载荷均为无害演示：写时间戳日志 + 弹出 Windows 计算器。
 
 ## 实测结论总表（2026-08-30，Windows 10）
@@ -91,7 +91,17 @@
 实测：`--new-window` 打开含 `.trae/mcp.json` + `.vscode/tasks.json` 的工作区，
 70 秒内零触发（MCP 默认关；tasks 需 Trust+Allow 交互确认）。
 
-## 三、防御建议（面向所有 AI IDE 用户）
+## 三、DeepSeek Harness（DSH）：本目录内的两个子实验室
+
+| 子目录 | 内容 | 关键结论 |
+|---|---|---|
+| `dsh-noinstall-lab/` | 实验四（PR #1）：DSH 无安装执行三块攻击面（项目级注入 / profile 级 MCP spawn / 工具级 vm eval） | 项目级指令注入"克隆即触发"；源码逐行阅读见 [docs/dsh-code-reading.md](../docs/dsh-code-reading.md) |
+| `dsh-bypass-lab/` | 实验五：DSH 沙箱绕过（阶梯探针 + ShellWindows 委托 + 端到端受害者旅程） | WRITE_RESTRICTED 令牌不遏制进程派生；委托可在沙箱外以完整令牌拉起进程 |
+
+两者复现步骤见各自 README 与 [docs/reproduction-guide.md](../docs/reproduction-guide.md)，
+验证与绕过分析全文见 [docs/pr-1-verification.md](../docs/pr-1-verification.md)。
+
+## 四、防御建议（面向所有 AI IDE 用户）
 
 1. **把 `.zcode/`、`.agents/`、`.trae/`、`.cursor/`、`.mcp.json` 加入 PR 审计清单**，
    与 `.vscode/`、`.claude/` 同等对待——出现 `command`/`args` 类字段变更即告警。
@@ -102,6 +112,8 @@
 ## 附：本目录结构
 
 ```
-zcode-ws/   ZCode 演示工作区（.zcode/config.json + 载荷 + TRIGGER_LOG.txt）
-trae-ws/    TRAE 演示工作区（.trae/mcp.json + .vscode/tasks.json + 载荷）
+zcode-ws/           ZCode 演示工作区（.zcode/config.json + 载荷 + TRIGGER_LOG.txt）
+trae-ws/            TRAE 演示工作区（.trae/mcp.json + .vscode/tasks.json + 载荷）
+dsh-noinstall-lab/  DSH 无安装执行实验室（PR #1：注入/MCP spawn/vm eval 三块攻击面）
+dsh-bypass-lab/     DSH 沙箱绕过实验室（阶梯探针 + ShellWindows 委托 + 受害者模拟项目）
 ```

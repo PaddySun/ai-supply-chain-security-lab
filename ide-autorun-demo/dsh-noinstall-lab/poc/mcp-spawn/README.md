@@ -1,6 +1,6 @@
 # 实验二：MCP 配置 → 任意进程派生（profile 级）
 
-## 机制（源码见 `../../docs/dsh-code-reading.md` 第一节）
+## 机制（源码见 `../../../docs/dsh-code-reading.md` 第一节）
 
 `dsh-mcp-client` 的 `createTransport()` 把配置里的 `command` / `args` / `cwd`
 **原样**交给 `StdioClientTransport`（MCP SDK），后者用 `child_process.spawn`

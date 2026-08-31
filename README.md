@@ -7,7 +7,7 @@
 📖 **[独立实测报告：《打开文件夹即执行：四款客户端工作区自动执行攻击面》](docs/ide-attack-surface.md)**
 🧪 **[一站式复现指南（五个实验，任何人可复现）](docs/reproduction-guide.md)**
 
-> ⚠️ **警告**：`autorun-demo/`、`ide-autorun-demo/`、`dsh-bypass-lab/` 内含
+> ⚠️ **警告**：`autorun-demo/`、`ide-autorun-demo/`（含 ZCode/TRAE/DSH 全部工作区）内含
 > **可自动执行的无害演示载荷**——用 VS Code / Claude Code / ZCode / DSH 打开
 > 对应工作区会自动弹出计算器并写日志。请使用一次性环境体验，勿在日常开发
 > 环境打开。
@@ -19,8 +19,8 @@
 | `slopsquatting-lab/` | 实验一：LLM 包幻觉测量（USENIX'25 方法论复现） | deepseek-chat 零幻觉 vs 论文 19.7% |
 | `autorun-demo/` | 实验二：Claude Code / VS Code 零安装执行 | Claude Code 零交互执行；VS Code 两道确认败给"已信任项目" |
 | `ide-autorun-demo/` | 实验三：ZCode / TRAE 工作区 MCP 攻击面 | ZCode 打开文件夹即拉起（11 次）；TRAE 三层防御为正面范例 |
-| `dsh-noinstall-lab/` | 实验四（PR #1，作者 huangmaomaojiejie）：DeepSeek Harness 无安装执行 | 项目级注入成立；profile 级 MCP 配置即 spawn |
-| `dsh-bypass-lab/` | 实验五：DSH 沙箱绕过 | ShellWindows 委托在 WRITE_RESTRICTED 令牌下调起完整令牌进程 |
+| `ide-autorun-demo/dsh-noinstall-lab/` | 实验四（PR #1，作者 huangmaomaojiejie）：DeepSeek Harness 无安装执行 | 项目级注入成立；profile 级 MCP 配置即 spawn |
+| `ide-autorun-demo/dsh-bypass-lab/` | 实验五：DSH 沙箱绕过 | ShellWindows 委托在 WRITE_RESTRICTED 令牌下调起完整令牌进程 |
 | `docs/` | 全部文章、验证报告、会话转录与录屏归档 | 见下 |
 
 ## docs/ 结构

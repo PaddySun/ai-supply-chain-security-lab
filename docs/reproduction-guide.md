@@ -39,13 +39,13 @@ export SLOP_MODEL=deepseek-chat
 2. TRAE：打开 `ide-autorun-demo/trae-ws`——零触发（`.trae/mcp.json` 默认不加载）。
 3. 细节与反编译分析：[ide-attack-surface.md](ide-attack-surface.md)。
 
-## 实验四：DSH 无安装执行（`dsh-noinstall-lab/`，PR #1）
+## 实验四：DSH 无安装执行（`ide-autorun-demo/dsh-noinstall-lab/`，PR #1）
 
 ```bash
 npm install @deepseek-ai/dsh@0.1.1-rc.2
 ```
 
-- **实验 A（项目级注入）**：把 `dsh-noinstall-lab/poc/agmd-injection/` 作为 DSH
+- **实验 A（项目级注入）**：把 `ide-autorun-demo/dsh-noinstall-lab/poc/agmd-injection/` 作为 DSH
   工作区开会话，发"帮我初始化这个项目"——AGENTS.md 自动注入，观察模型是否
   执行/拒绝 `demo_payload.py`。
 - **实验 B（profile 级 MCP spawn）**：注意 PR 原始 `cordis.patch.yml` 有两处已
@@ -67,9 +67,9 @@ DSH_HOME=<隔离目录> node <dsh>/node_modules/@deepseek-ai/dsh/lib/bin.js \
   --profile headless --patch patch.yml "ok"   # 缺 API key 也会 spawn（激活先于凭据校验）
 ```
 
-## 实验五：DSH 沙箱绕过（`dsh-bypass-lab/`）
+## 实验五：DSH 沙箱绕过（`ide-autorun-demo/dsh-bypass-lab/`）
 
-见 [dsh-bypass-lab/README.md](../dsh-bypass-lab/README.md) 三个子实验：
+见 [dsh-bypass-lab/README.md](../ide-autorun-demo/dsh-bypass-lab/README.md) 三个子实验：
 阶梯探针（notepad 对照 = 进程派生不受限）、ShellWindows CLSID 委托
 （制胜技术，注意 ~7 秒 UWP 激活延迟）、端到端受害者旅程（纯净 HOME +
 一句话 → 计算器与 `.csvqrc` 同秒留痕）。
