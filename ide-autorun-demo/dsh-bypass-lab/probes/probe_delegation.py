@@ -4,7 +4,8 @@ r"""[BENIGN RESEARCH PROBE] 经运行中 Explorer(完整令牌)委托拉起计�
 
 同样在沙箱 runner 下运行。要点：
 1. ProgID 在受限令牌下解析为全零 CLSID，必须 [Type]::GetTypeFromCLSID 直连
-2. UWP 激活经委托路径约需 7 秒，轮询判断至少等 15 秒（我们第一轮 6 秒轮询误判过失败）
+2. UWP 激活经委托路径约需 7 秒，轮询判断至少等 15 秒（第一轮 6 秒轮询确曾误判，
+   当时归因轮询过短；2026-08-31 复盘更正真因为探测器失明，见第 3 条）
 3. 探测器不能用 tasklist/wmic：沙箱令牌丢弃 Authenticated Users 后 WMI 全线
    "拒绝访问"，进程可见必须走原生 EnumProcesses（2026-08-31 实测修正）
 """
