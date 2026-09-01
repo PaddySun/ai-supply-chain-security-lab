@@ -25,3 +25,9 @@ Thumbs.db
 
 # ZCode 会话产物（plans 等）
 .zcode/
+
+# 漏洞报送材料（仅本地：含厂商报告/平台填写稿/附件；防止误提交）
+docs/disclosure/
+
+# 漏洞平台表单抄录（含报送人实名/手机号等 PII，严禁入库）
+docs/漏洞平台要求/
