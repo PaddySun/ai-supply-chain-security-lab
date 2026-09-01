@@ -58,9 +58,14 @@ $sw.Item(0).Document.Application.ShellExecute('calc.exe','','','open',1)
 ```
 
 连接**运行中的 Explorer（完整令牌）**代为执行——UWP 计算器在 WRITE_RESTRICTED
-令牌下成功启动。两个已知坑：
+令牌下成功启动。三个已知坑：
 1. ProgID（`New-Object -ComObject ShellWindows`）在受限令牌下解析为全零 CLSID，必须直连 CLSID；
-2. 委托路径的 UWP 激活约需 7 秒，判定成功前至少轮询 15 秒。
+2. 委托路径的 UWP 激活延迟波动大（实测 0.5–7 秒+），判定成功前至少轮询 15 秒；
+3. **探测器不能用 tasklist/wmic**：沙箱令牌丢弃 Authenticated Users，WMI 全线
+   "拒绝访问"，受限令牌内进程可见必须走原生 `EnumProcesses`（2026-08-31 实测：
+   旧版探针在沙箱内把成功判成失败，独立验证 PR#3 的 C2 假阴性同因；
+   探针已修复，详见 [docs/pr3-independent-verification-comparison.md](../../docs/pr3-independent-verification-comparison.md)）。
+   沙箱外人工 tasklist 交叉检查永远值得做。
 
 ## 实验三：端到端受害者旅程（纯净环境一句话 → 计算器）
 

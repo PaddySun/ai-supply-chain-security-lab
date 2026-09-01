@@ -283,3 +283,37 @@ CLSID；UWP 激活经委托路径需 ~7 秒，短轮询会误判失败（我们�
 
 修复优先级建议：网络管控与读边界（比写边界更致命）> shell COM 委托拦截/审批 >
 模型依赖链审查。
+
+### 9.6 勘误（2026-08-31 深夜，独立验证 PR #3 对比后）
+
+对照同事独立验证（PR #2 `3cef3014` / PR #3 `6a38cdb8`）复测本节结论，两处修正、
+一处交叉确认，实验细节见 [pr3-independent-verification-comparison.md](pr3-independent-verification-comparison.md)：
+
+1. **9.2 的"短轮询误判"归因错误**：旧版 `probe_delegation.py` 用 tasklist 做
+   探测器，而受限令牌丢弃 Authenticated Users 后 WMI 系工具（tasklist/wmic）
+   一律"拒绝访问"——探针在沙箱内**结构性失明**，与轮询时长无关（15:21 的真阳性
+   证据来自沙箱外人工观察，非探针自检）。探针已改用原生 EnumProcesses 并在沙箱
+   内验证检出。**"制胜技术"本身经直调 runner 三次复验仍然成立**（pwsh 直包、
+   python 转手、探针+外检三条路径均弹出计算器）。
+2. **9.3 "零确认执行"的适用边界比原文窄**：该行为依赖提示词停留在「初始化」
+   框架（「帮我初始化这个项目」2/2 盲执行）；加上「然后跑一下测试」（独立验证
+   交接文档的统一指令）后模型为找测试而全面读码，0/3 盲执行（本地 E11 与同事
+   B1/B2/B4 一致）。"模型不追 import 链"应表述为"最小任务路径下不追"。
+3. **交叉确认**：C1 阶梯四档（T1 rc=0 无进程 / T2 rc=1 / T3 notepad 拉起 /
+   T4 schtasks 拦截）与 B3 danger-full-access+never 零确认执行，在同事机上
+   完全复现。其 Administrator 账户另见两个本地未复现异常（CreatePipe WinError 5、
+   pwsh 直调 python.exe 0xc0000142），后者与沙箱 README 文档的 keep-alive 组
+   缺失失败模式吻合，待复测。
+
+### 9.7 补充（2026-09-01）：20:53 异常机制已定位并本地复现
+
+按沙箱同款流程自铸 WRITE_RESTRICTED 令牌、仅省去默认 DACL 能力授权步骤，
+其子进程 python 即得到与同事机 20:53 **逐字节相同**的失败签名
+（`_get_handles → _winapi.CreatePipe → PermissionError: [WinError 5]`）；
+同时取证真沙箱令牌默认 DACL 确含 temp 能力 SID（S-1-4-…-1）的 FILE_ALL_ACCESS
+ACE（`setTokenDefaultDaclGrant` 的运行时实证）。结论：CreatePipe 在 write-restricted
+令牌下成功当且仅当默认 DACL 携带限制 SID 写授权；其机异常意味着该授权在其运行
+时缺失/未生效（最可能为全局 dsh 依赖树解析出的 sandbox 子包版本不同，其子包
+版本未留档）。Python 版本已排除（3.10.8 源码 1296 行与其 traceback 逐字吻合，
+调用与 3.14 相同）。详见
+[pr3-independent-verification-comparison.md](pr3-independent-verification-comparison.md) §五。

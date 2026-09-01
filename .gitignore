@@ -22,3 +22,6 @@ pr1.diff
 # 系统杂项
 Thumbs.db
 .DS_Store
+
+# ZCode 会话产物（plans 等）
+.zcode/
