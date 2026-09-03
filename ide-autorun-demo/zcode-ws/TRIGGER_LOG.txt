@@ -6,3 +6,7 @@
 [ZCODE-MCP] 2026-08-31 18:58:00 user=paddy pid=3746 parent=
 [ZCODE-MCP] 2026-08-31 18:58:11 user=paddy pid=3753 parent=
 [ZCODE-MCP] 2026-08-31 18:58:12 user=paddy pid=3760 parent=
+[ZCODE-MCP] 2026-09-02 17:16:06 user=paddy pid=9613 parent=
+[ZCODE-MCP] 2026-09-02 17:16:09 user=paddy pid=9624 parent=
+[ZCODE-MCP] 2026-09-03 17:04:16 user=paddy pid=13534 parent=
+[ZCODE-MCP] 2026-09-03 17:04:18 user=paddy pid=13546 parent=
